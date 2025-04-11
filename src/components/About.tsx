@@ -11,7 +11,7 @@ const About = () => {
             <div className="rounded-2xl overflow-hidden card-shadow bg-gradient-to-br from-portfolio-purple/80 to-portfolio-blue p-1">
               <div className="bg-white rounded-xl p-4">
                 <img 
-                  src="https://via.placeholder.com/400x500" 
+                  src="../my-img.jpeg" 
                   alt="Santosh Kiran Sulake" 
                   className="w-full h-auto rounded-lg"
                 />
