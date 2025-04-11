@@ -67,6 +67,39 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
+
+  /* Desktop theme - a softer, more professional look */
+  .desktop {
+    --background: 220 14% 96%;
+    --foreground: 222 47% 11%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    
+    --primary: 260 67% 70%;
+    --primary-foreground: 210 20% 98%;
+    
+    --secondary: 220 14% 90%;
+    --secondary-foreground: 222 47% 11%;
+    
+    --muted: 220 14% 90%;
+    --muted-foreground: 220 8% 46%;
+    
+    --accent: 220 14% 90%;
+    --accent-foreground: 222 47% 11%;
+    
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 210 20% 98%;
+    
+    --border: 220 13% 86%;
+    --input: 220 13% 86%;
+    --ring: 260 67% 70%;
+    
+    --radius: 0.375rem;
+  }
 }
 
 @layer base {
@@ -125,5 +158,19 @@
 
   .card-shadow {
     @apply shadow-lg hover:shadow-xl transition-shadow duration-300;
+  }
+
+  /* Gradient backgrounds */
+  .gradient-bg {
+    @apply bg-gradient-to-br from-portfolio-purple/10 via-blue-300/10 to-purple-300/10;
+  }
+
+  .gradient-border {
+    @apply border border-portfolio-purple/20 hover:border-portfolio-purple/40 transition-colors duration-300;
+  }
+
+  /* Text gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-portfolio-purple to-blue-500;
   }
 }

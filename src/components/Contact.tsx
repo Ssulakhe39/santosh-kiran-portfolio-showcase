@@ -2,9 +2,10 @@
 import { useState } from 'react';
 import { Mail, MapPin, ExternalLink, Github, Linkedin } from 'lucide-react';
 import { toast } from "@/hooks/use-toast";
+import { saveContactSubmission, ContactFormData } from '@/services/databaseService';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
     message: '',
@@ -16,34 +17,47 @@ const Contact = () => {
     setFormData(prevData => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      toast({
-        title: "Message sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
-      });
+    try {
+      const result = await saveContactSubmission(formData);
       
-      setFormData({
-        name: '',
-        email: '',
-        message: '',
+      if (result.success) {
+        toast({
+          title: "Message sent!",
+          description: "Thank you for your message. I'll get back to you soon.",
+        });
+        
+        setFormData({
+          name: '',
+          email: '',
+          message: '',
+        });
+      } else {
+        throw new Error("Failed to send message");
+      }
+    } catch (error) {
+      console.error("Contact form error:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again later or contact me directly via email.",
+        variant: "destructive",
       });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
-    <section id="contact" className="section bg-gray-50">
+    <section id="contact" className="section bg-gray-50 dark:bg-gray-900">
       <div className="container">
-        <h2 className="section-title">Contact Me</h2>
+        <h2 className="section-title dark:text-white">Contact Me</h2>
         <div className="mt-12 grid lg:grid-cols-2 gap-10">
           <div className="animate-fade-in-right">
-            <h3 className="text-2xl font-semibold mb-6">Get In Touch</h3>
-            <p className="text-gray-700 mb-8">
+            <h3 className="text-2xl font-semibold mb-6 dark:text-white">Get In Touch</h3>
+            <p className="text-gray-700 dark:text-gray-300 mb-8">
               Feel free to reach out for collaborations, opportunities, or just a friendly chat 
               about technology and development.
             </p>
@@ -54,7 +68,7 @@ const Contact = () => {
                   <Mail className="w-5 h-5 text-portfolio-purple" />
                 </div>
                 <div>
-                  <h4 className="text-lg font-medium">Email</h4>
+                  <h4 className="text-lg font-medium dark:text-white">Email</h4>
                   <a 
                     href="mailto:santoshsulakhe39@gmail.com" 
                     className="text-portfolio-purple hover:underline"
@@ -69,8 +83,8 @@ const Contact = () => {
                   <MapPin className="w-5 h-5 text-portfolio-purple" />
                 </div>
                 <div>
-                  <h4 className="text-lg font-medium">Location</h4>
-                  <p className="text-gray-700">Hyderabad, Telangana, India</p>
+                  <h4 className="text-lg font-medium dark:text-white">Location</h4>
+                  <p className="text-gray-700 dark:text-gray-300">Hyderabad, Telangana, India</p>
                 </div>
               </div>
               
@@ -79,7 +93,7 @@ const Contact = () => {
                   <Linkedin className="w-5 h-5 text-portfolio-purple" />
                 </div>
                 <div>
-                  <h4 className="text-lg font-medium">LinkedIn</h4>
+                  <h4 className="text-lg font-medium dark:text-white">LinkedIn</h4>
                   <a 
                     href="https://www.linkedin.com/in/santosh-kiran-sulake-891a10132" 
                     target="_blank"
@@ -97,7 +111,7 @@ const Contact = () => {
                   <Github className="w-5 h-5 text-portfolio-purple" />
                 </div>
                 <div>
-                  <h4 className="text-lg font-medium">GitHub</h4>
+                  <h4 className="text-lg font-medium dark:text-white">GitHub</h4>
                   <a 
                     href="https://github.com/Ssulakhe39" 
                     target="_blank"
@@ -113,9 +127,9 @@ const Contact = () => {
           </div>
           
           <div className="animate-fade-in-left">
-            <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
+            <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
               <div className="mb-4">
-                <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
+                <label htmlFor="name" className="block text-gray-700 dark:text-gray-200 font-medium mb-2">
                   Your Name
                 </label>
                 <input
@@ -124,13 +138,13 @@ const Contact = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-portfolio-purple"
+                  className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-portfolio-purple dark:bg-gray-700 dark:text-white"
                   required
                 />
               </div>
               
               <div className="mb-4">
-                <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
+                <label htmlFor="email" className="block text-gray-700 dark:text-gray-200 font-medium mb-2">
                   Your Email
                 </label>
                 <input
@@ -139,13 +153,13 @@ const Contact = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-portfolio-purple"
+                  className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-portfolio-purple dark:bg-gray-700 dark:text-white"
                   required
                 />
               </div>
               
               <div className="mb-4">
-                <label htmlFor="message" className="block text-gray-700 font-medium mb-2">
+                <label htmlFor="message" className="block text-gray-700 dark:text-gray-200 font-medium mb-2">
                   Message
                 </label>
                 <textarea
@@ -154,7 +168,7 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   rows={5}
-                  className="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-portfolio-purple"
+                  className="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-portfolio-purple dark:bg-gray-700 dark:text-white"
                   required
                 ></textarea>
               </div>

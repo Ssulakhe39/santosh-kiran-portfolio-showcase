@@ -1,3 +1,5 @@
+
+/* Base styles */
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -5,38 +7,64 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Theme-specific background gradients */
+.light .page-gradient-bg {
+  background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(240,240,255,1) 100%);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dark .page-gradient-bg {
+  background: linear-gradient(135deg, rgba(26,25,32,0.8) 0%, rgba(40,40,60,1) 100%);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+.desktop .page-gradient-bg {
+  background: linear-gradient(135deg, rgba(246,246,249,0.8) 0%, rgba(236,236,246,1) 100%);
+}
+
+/* Animation keyframes */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
   }
 }
 
-.card {
-  padding: 2em;
+.float-animation {
+  animation: float 6s ease-in-out infinite;
 }
 
-.read-the-docs {
-  color: #888;
+/* Glass effect - useful for cards and overlays */
+.glass-effect {
+  @apply backdrop-blur-md bg-white/10 dark:bg-black/10 border border-white/20 dark:border-white/10;
+}
+
+/* Card hover effects */
+.hover-card {
+  @apply transition-all duration-300;
+}
+
+.hover-card:hover {
+  @apply transform -translate-y-2;
+}
+
+/* Desktop theme specific styles */
+.desktop .card {
+  @apply border-gray-200 shadow-sm;
+}
+
+.desktop .btn-primary {
+  @apply shadow-sm;
+}
+
+/* Use these in components for consistent gradients */
+.gradient-purple {
+  @apply bg-gradient-to-br from-portfolio-purple to-indigo-500;
+}
+
+.gradient-blue {
+  @apply bg-gradient-to-br from-blue-400 to-portfolio-purple;
 }
