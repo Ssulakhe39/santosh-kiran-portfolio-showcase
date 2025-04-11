@@ -19,14 +19,17 @@ export interface PageVisit {
 // Save contact form submissions
 export const saveContactSubmission = async (data: ContactFormData) => {
   try {
-    const { error } = await supabase.from('contact_submissions').insert([
-      { 
-        name: data.name,
-        email: data.email,
-        message: data.message,
-        created_at: new Date().toISOString()
-      }
-    ]);
+    // Use type assertion to help TypeScript understand this is a valid table
+    const { error } = await supabase
+      .from('contact_submissions' as any)
+      .insert([
+        { 
+          name: data.name,
+          email: data.email,
+          message: data.message,
+          created_at: new Date().toISOString()
+        }
+      ] as any);
     
     if (error) throw error;
     return { success: true };
@@ -39,13 +42,16 @@ export const saveContactSubmission = async (data: ContactFormData) => {
 // Track page visits
 export const trackPageVisit = async (path: string) => {
   try {
-    const { error } = await supabase.from('page_visits').insert([
-      { 
-        path, 
-        referrer: document.referrer || null,
-        created_at: new Date().toISOString()
-      }
-    ]);
+    // Use type assertion to help TypeScript understand this is a valid table
+    const { error } = await supabase
+      .from('page_visits' as any)
+      .insert([
+        { 
+          path, 
+          referrer: document.referrer || null,
+          created_at: new Date().toISOString()
+        }
+      ] as any);
     
     if (error) throw error;
     return { success: true };

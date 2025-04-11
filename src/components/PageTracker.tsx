@@ -12,8 +12,16 @@ const PageTracker = () => {
     
     // Only track if the path changes or on initial load
     if (prevPathRef.current !== currentPath) {
-      trackPageVisit(currentPath).catch(console.error);
-      prevPathRef.current = currentPath;
+      // Use async IIFE to handle the promise without useEffect warning
+      (async () => {
+        try {
+          await trackPageVisit(currentPath);
+        } catch (error) {
+          // Silent catch for analytics - no need to disturb the user experience
+          console.error("Failed to track page visit:", error);
+        }
+        prevPathRef.current = currentPath;
+      })();
     }
   }, [location.pathname]);
 
