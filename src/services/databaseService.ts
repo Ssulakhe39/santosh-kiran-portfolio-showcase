@@ -1,5 +1,6 @@
 
 import { supabase } from "@/integrations/supabase/client";
+import { Database } from "@/integrations/supabase/types";
 
 // Interface for contact form data
 export interface ContactFormData {
@@ -19,9 +20,8 @@ export interface PageVisit {
 // Save contact form submissions
 export const saveContactSubmission = async (data: ContactFormData) => {
   try {
-    // Use type assertion to help TypeScript understand this is a valid table
     const { error } = await supabase
-      .from('contact_submissions' as any)
+      .from('contact_submissions')
       .insert([
         { 
           name: data.name,
@@ -29,7 +29,7 @@ export const saveContactSubmission = async (data: ContactFormData) => {
           message: data.message,
           created_at: new Date().toISOString()
         }
-      ] as any);
+      ]);
     
     if (error) throw error;
     return { success: true };
@@ -42,16 +42,15 @@ export const saveContactSubmission = async (data: ContactFormData) => {
 // Track page visits
 export const trackPageVisit = async (path: string) => {
   try {
-    // Use type assertion to help TypeScript understand this is a valid table
     const { error } = await supabase
-      .from('page_visits' as any)
+      .from('page_visits')
       .insert([
         { 
           path, 
           referrer: document.referrer || null,
           created_at: new Date().toISOString()
         }
-      ] as any);
+      ]);
     
     if (error) throw error;
     return { success: true };

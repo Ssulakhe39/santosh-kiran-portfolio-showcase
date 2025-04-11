@@ -160,9 +160,9 @@
     @apply shadow-lg hover:shadow-xl transition-shadow duration-300;
   }
 
-  /* Gradient backgrounds */
+  /* Improved gradient backgrounds */
   .gradient-bg {
-    @apply bg-gradient-to-br from-portfolio-purple/10 via-blue-300/10 to-purple-300/10;
+    @apply bg-gradient-to-br from-indigo-400/20 via-purple-300/15 to-pink-300/10;
   }
 
   .gradient-border {
@@ -171,6 +171,31 @@
 
   /* Text gradient */
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-portfolio-purple to-blue-500;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-portfolio-purple to-indigo-500;
+  }
+  
+  /* New gradient classes with better colors */
+  .hero-gradient {
+    @apply bg-gradient-to-br from-purple-400/10 via-indigo-300/10 to-blue-400/5;
+  }
+  
+  .card-gradient {
+    @apply bg-gradient-to-br from-white to-gray-50/80 dark:from-gray-800 dark:to-gray-900/80;
+  }
+  
+  .button-gradient {
+    @apply bg-gradient-to-r from-portfolio-purple to-indigo-500 hover:from-portfolio-deep-purple hover:to-indigo-600;
+  }
+  
+  .section-gradient-light {
+    @apply bg-gradient-to-br from-gray-50 to-white;
+  }
+  
+  .section-gradient-dark {
+    @apply bg-gradient-to-br from-gray-900 to-gray-800;
+  }
+  
+  .accent-gradient {
+    @apply bg-gradient-to-r from-pink-400 to-portfolio-purple;
   }
 }
