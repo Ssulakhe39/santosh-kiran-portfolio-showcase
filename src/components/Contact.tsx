@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Mail, MapPin, ExternalLink, GitHub, Linkedin } from 'lucide-react';
+import { Mail, MapPin, ExternalLink, Github, Linkedin } from 'lucide-react';
 import { toast } from "@/hooks/use-toast";
 
 const Contact = () => {
@@ -94,7 +94,7 @@ const Contact = () => {
               
               <div className="flex items-start">
                 <div className="bg-portfolio-purple/10 rounded-full p-3 mr-4">
-                  <GitHub className="w-5 h-5 text-portfolio-purple" />
+                  <Github className="w-5 h-5 text-portfolio-purple" />
                 </div>
                 <div>
                   <h4 className="text-lg font-medium">GitHub</h4>
